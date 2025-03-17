@@ -1110,7 +1110,7 @@ nav {
 
 /* ====== CALL TO ACTION ====== */
 .cta {
-    background-color: var(--azul-petroleo);
+    background-color: var(--gris-neutro);
     padding: 4rem 0;
     text-align: center;
 }
@@ -1234,7 +1234,7 @@ nav {
 
 .form-group i {
     position: absolute;
-    top: 38px;
+    top: 55px;
     left: 10px;
     color: var(--azul-grisaceo);
 }
@@ -1416,7 +1416,7 @@ input:focus, select:focus, textarea:focus {
 
 /* ====== CONTACTO ====== */
 .contact-section {
-    padding: 4rem 0;
+    padding: 0.5    rem 0;
 }
 
 .contact-grid {
@@ -1494,7 +1494,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .map-section {
-    padding: 4rem 0;
+    padding: 0.5rem 0;
 }
 
 .map-container {
