@@ -173,9 +173,105 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
+
+    // Partners Carousel (NUEVO)
+    const partnersCarousel = {
+        slides: document.querySelectorAll('.partner-logo-slide'),
+        indicators: document.querySelectorAll('.carousel-indicators .indicator'),
+        prevBtn: document.querySelector('.carousel-controls .carousel-control.prev'),
+        nextBtn: document.querySelector('.carousel-controls .carousel-control.next'),
+        currentIndex: 0,
+        interval: null,
+        
+        init: function() {
+            if (this.slides.length === 0) return;
+            
+            // Configurar inicialmente todos los slides excepto el primero
+            this.slides.forEach((slide, index) => {
+                if (index !== 0) {
+                    slide.style.display = 'none';
+                }
+            });
+            
+            // Configurar botones de navegación
+            if (this.prevBtn) {
+                this.prevBtn.addEventListener('click', () => {
+                    this.showSlide(this.currentIndex - 1);
+                });
+            }
+            
+            if (this.nextBtn) {
+                this.nextBtn.addEventListener('click', () => {
+                    this.showSlide(this.currentIndex + 1);
+                });
+            }
+            
+            // Configurar indicadores
+            this.indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    this.showSlide(index);
+                });
+            });
+            
+            // Iniciar carousel automático
+            this.startAutoplay();
+            
+            // Pausar/reanudar el carousel al pasar el mouse
+            const carouselContainer = document.querySelector('.partners-carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', () => this.stopAutoplay());
+                carouselContainer.addEventListener('mouseleave', () => this.startAutoplay());
+            }
+        },
+        
+        showSlide: function(index) {
+            // Ajustar el índice si está fuera de rango
+            if (index < 0) {
+                index = this.slides.length - 1;
+            } else if (index >= this.slides.length) {
+                index = 0;
+            }
+            
+            // Ocultar todos los slides
+            this.slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Quitar clase active de todos los indicadores
+            this.indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            // Mostrar el slide actual
+            this.slides[index].style.display = 'flex';
+            
+            // Actualizar indicador activo
+            if (this.indicators[index]) {
+                this.indicators[index].classList.add('active');
+            }
+            
+            // Actualizar índice actual
+            this.currentIndex = index;
+        },
+        
+        startAutoplay: function() {
+            this.stopAutoplay(); // Evitar múltiples intervalos
+            this.interval = setInterval(() => {
+                this.showSlide(this.currentIndex + 1);
+            }, 4000); // Cambiar slide cada 4 segundos
+        },
+        
+        stopAutoplay: function() {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+        }
+    };
+
     // Inicializar los sliders
     heroSlider.init();
     testimonialSlider.init();
+    partnersCarousel.init(); // Inicializar el nuevo carousel para aseguradoras
     
     // Menu de navegación responsive
     const menuToggle = document.querySelector('.menu-toggle');
@@ -199,6 +295,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Manejo de menú desplegable en móvil
+    const dropdownLinks = document.querySelectorAll('.dropdown > a');
+    
+    if (window.innerWidth <= 768) {
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Solo prevenir comportamiento por defecto en móvil
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = this.parentNode;
+                    const submenu = parent.querySelector('.submenu');
+                    if (submenu) {
+                        submenu.style.height = submenu.style.height === 'auto' ? '0' : 'auto';
+                    }
+                }
+            });
+        });
+    }
     
     // Animación de elementos al hacer scroll
     const animateOnScroll = function() {
@@ -317,6 +432,23 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Opcionalmente, limpiar el formulario
             // contactForm.reset();
+        });
+    }
+    
+    // Formulario de cotización
+    const quotationForm = document.getElementById('quotationForm');
+    
+    if (quotationForm) {
+        quotationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Aquí iría la validación y el envío del formulario
+            // Por ahora, simulamos una respuesta exitosa
+            
+            alert('¡Gracias por solicitar una cotización! Te contactaremos a la brevedad.');
+            
+            // Opcionalmente, limpiar el formulario
+            // quotationForm.reset();
         });
     }
     

@@ -29,6 +29,7 @@ body {
     background-color: var(--fondo-claro);
     color: var(--texto-parrafo);
     line-height: 1.6;
+    overflow-x: hidden; /* Prevenir scroll horizontal en móviles */
 }
 
 .container {
@@ -80,6 +81,11 @@ a {
 
 ul {
     list-style: none;
+}
+
+img {
+    max-width: 100%; /* Asegurar que las imágenes sean responsive */
+    height: auto;
 }
 
 /* Botones */
@@ -191,7 +197,7 @@ nav {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--azul-petroleo);
+    background-color: white;
 }
 
 .menu li a:hover::after {
@@ -201,7 +207,7 @@ nav {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--azul-petroleo);
+    background-color: white;
     transform: scaleX(1);
     transition: transform 0.3s ease;
 }
@@ -213,7 +219,7 @@ nav {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--azul-petroleo);
+    background-color: white;
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -260,7 +266,7 @@ nav {
 }
 
 .submenu li a:hover {
-    color: var(--azul-petroleo);
+    color: var(--blanco-grisaceo);
 }
 
 /* Menu Toggle (Responsive) */
@@ -279,6 +285,18 @@ nav {
     background-color: var(--blanco-grisaceo);
     border-radius: 3px;
     transition: all 0.3s ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
 }
 
 /* ====== HERO SLIDER ====== */
@@ -689,6 +707,7 @@ nav {
     overflow: hidden;
     margin-right: 1rem;
     border: 3px solid var(--azul-petroleo);
+    flex-shrink: 0;
 }
 
 .client-photo img {
@@ -850,6 +869,7 @@ nav {
     justify-content: center;
     margin-right: 1.5rem;
     box-shadow: 0 5px 15px rgba(43, 125, 117, 0.3);
+    flex-shrink: 0;
 }
 
 .service-icon i {
@@ -888,6 +908,7 @@ nav {
 .service-features li i {
     margin-right: 12px;
     font-size: 20px;
+    flex-shrink: 0;
 }
 
 .service-features li i.fa-check-circle {
@@ -1022,6 +1043,7 @@ nav {
 .feature-list li i {
     margin-right: 10px;
     font-size: 16px;
+    flex-shrink: 0;
 }
 
 .feature-list li i.fa-check {
@@ -1077,6 +1099,7 @@ nav {
     color: var(--azul-petroleo);
     margin-right: 10px;
     font-size: 18px;
+    flex-shrink: 0;
 }
 
 .plan-image img {
@@ -1111,6 +1134,58 @@ nav {
 }
 
 /* ====== FORMULARIO DE COTIZACIÓN ====== */
+.insurance-selector {
+    padding: 3rem 0;
+}
+
+.insurance-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.insurance-option {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.insurance-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.insurance-option.selected {
+    border-color: var(--azul-petroleo);
+    background-color: rgba(43, 125, 117, 0.05);
+}
+
+.option-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--azul-petroleo);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.option-icon i {
+    font-size: 30px;
+    color: white;
+}
+
+.insurance-option h3 {
+    margin-bottom: 1rem;
+}
+
 .quote-form {
     padding: 4rem 0;
 }
@@ -1165,6 +1240,7 @@ nav {
 }
 
 label {
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
     color: var(--negro-grisaceo);
@@ -1172,14 +1248,16 @@ label {
 
 input, select, textarea {
     padding: 0.8rem;
-    padding-left: 2.5rem; /* Espacio para iconos */
+    padding-left: 2.5rem;
     border-radius: 6px;
+    margin-bottom: 1.5rem;
     border: 1px solid var(--gris-neutro);
     background-color: white;
     color: var(--negro-grisaceo);
     font-family: 'Roboto', sans-serif;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
+    resize: none;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -1297,6 +1375,7 @@ input:focus, select:focus, textarea:focus {
     gap: 1rem;
     justify-content: flex-end;
     margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
 .quote-sidebar {
@@ -1328,6 +1407,7 @@ input:focus, select:focus, textarea:focus {
 .info-card li i {
     color: var(--azul-petroleo);
     margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .info-card .btn-secondary {
@@ -1377,6 +1457,7 @@ input:focus, select:focus, textarea:focus {
     color: var(--azul-petroleo);
     margin-right: 1rem;
     margin-top: 0.5rem;
+    flex-shrink: 0;
 }
 
 .info-item h3 {
@@ -1392,6 +1473,7 @@ input:focus, select:focus, textarea:focus {
     display: flex;
     gap: 1rem;
     margin-top: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .social-icons a {
@@ -1462,12 +1544,17 @@ input:focus, select:focus, textarea:focus {
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: white;
 }
 
 .mission-card i {
     font-size: 48px;
     color: var(--azul-petroleo);
     margin-bottom: 1.5rem;
+}
+
+.mission-card h3 {
+    color: white;
 }
 
 .team-section {
@@ -1517,6 +1604,32 @@ input:focus, select:focus, textarea:focus {
 .why-choose-us {
     padding: 4rem 0;
     background-color: rgba(120, 150, 147, 0.1);
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.partner-logo {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--azul-petroleo);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* ====== FOOTER ====== */
@@ -1619,7 +1732,6 @@ footer {
     
     .plan-content,
     .plan-content.reverse,
-    .contact-grid,
     .history-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -1633,9 +1745,28 @@ footer {
         order: -1;
     }
     
-    .contact-form,
-    .contact-info {
-        padding: 1.5rem;
+    /* Correcciones para servicios */
+    .service-content.left-aligned,
+    .service-content.right-aligned {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-content .service-image {
+        order: -1;
+    }
+    
+    .service-header {
+        flex-wrap: wrap;
+    }
+    
+    .service-header h2 {
+        font-size: 28px;
+    }
+    
+    /* Correcciones para contacto */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 }
 
@@ -1652,31 +1783,47 @@ footer {
         font-size: 22px;
     }
     
-    .hero-content p {
-        font-size: 20px;
+    /* Ajustes para el hero */
+    .hero-slider {
+        height: 60vh;
+    }
+    
+    .slide-content h1 {
+        font-size: 32px;
+    }
+    
+    .slide-content p {
+        font-size: 18px;
+    }
+    
+    /* Menu móvil */
+    .menu-toggle {
+        display: flex;
     }
     
     .menu {
         position: fixed;
-        top: 70px;
+        top: 72px; /* Altura del header */
         left: -100%;
         width: 80%;
         max-width: 300px;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 72px);
         background-color: var(--negro-grisaceo);
         flex-direction: column;
         padding: 2rem;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         overflow-y: auto;
+        z-index: 1000;
     }
     
     .menu.active {
         left: 0;
     }
     
-    .menu-toggle {
-        display: flex;
+    .menu li {
+        margin-bottom: 1rem;
+        width: 100%;
     }
     
     .dropdown {
@@ -1693,6 +1840,7 @@ footer {
         overflow: hidden;
         padding: 0;
         transition: height 0.3s ease;
+        background-color: transparent;
     }
     
     .dropdown:hover .submenu {
@@ -1702,6 +1850,46 @@ footer {
     
     .submenu li {
         padding-left: 1rem;
+    }
+    
+    /* Correcciones para beneficios y testimonios */
+    .benefit-card,
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-track {
+        min-height: 350px;
+    }
+    
+    .client-info {
+        flex-wrap: wrap;
+    }
+    
+    /* Correcciones para formularios */
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .insurance-option {
+        padding: 1.5rem;
+    }
+    
+    /* Correcciones para el banner */
+    .page-banner {
+        height: 250px;
+    }
+    
+    .page-banner h1 {
+        font-size: 32px;
+    }
+    
+    .page-banner p {
+        font-size: 18px;
     }
 }
 
@@ -1718,38 +1906,151 @@ footer {
         font-size: 20px;
     }
     
+    p {
+        font-size: 16px;
+    }
+    
     .container {
         width: 95%;
         padding: 1.5rem 0;
     }
     
-    .hero {
-        height: 70vh;
+    /* Ajustes adicionales para móvil */
+    .hero-slider {
+        height: 50vh;
     }
     
-    .hero-content {
+    .slide-content {
         padding: 1.5rem;
     }
     
-    .hero-content p {
-        font-size: 18px;
-    }
-    
-    .btn-primary, 
-    .btn-secondary {
-        width: 100%;
+    .slide-content h1 {
+        font-size: 28px;
         margin-bottom: 1rem;
     }
     
-    .cta-buttons {
-        flex-direction: column;
+    .slide-content p {
+        font-size: 16px;
+        margin-bottom: 1.5rem;
     }
     
-    .form-row {
+    /* Botones */
+    .btn-primary, 
+    .btn-secondary {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    .slider-controls,
+    .testimonial-controls {
+        bottom: 15px;
+    }
+    
+    .slider-arrow,
+    .testimonial-arrow,
+    .carousel-control {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    /* Beneficios y Partners */
+    .benefits-grid,
+    .partners-grid,
+    .mission-vision-grid,
+    .team-grid {
+        gap: 1.5rem;
+    }
+    
+    .benefit-card {
+        padding: 1.5rem;
+    }
+    
+    .benefit-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .benefit-icon i {
+        font-size: 28px;
+    }
+    
+    /* Ajustes para servicios */
+    .service-section {
+        padding: 3rem 0;
+    }
+    
+    .service-content {
+        gap: 2rem;
+    }
+    
+    .service-image,
+    .plan-image {
+        margin-bottom: 1.5rem;
+    }
+    
+    .service-header {
+        margin-bottom: 1rem;
+    }
+    
+    .service-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+    }
+    
+    .service-icon i {
+        font-size: 24px;
+    }
+    
+    .service-header h2 {
+        font-size: 24px;
+    }
+    
+    .service-tagline {
+        font-size: 18px;
+    }
+    
+    /* Ajustes para contacto y mapa */
+    .contact-form,
+    .contact-info {
+        padding: 1.5rem;
+    }
+    
+    #googleMap {
+        height: 300px !important;
+    }
+    
+    /* Ajustes para footer */
+    .footer-grid {
         grid-template-columns: 1fr;
+        text-align: center;
     }
     
-    .form-actions {
-        flex-direction: column;
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    /* Ajustes para el equipo */
+    .member-photo {
+        width: 150px;
+        height: 150px;
+    }
+    
+    /* Menu móvil */
+    .menu {
+        width: 100%;
+        max-width: none;
+        top: 68px;
     }
 }
