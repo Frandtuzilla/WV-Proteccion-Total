@@ -125,7 +125,8 @@
                         </div>
                     </div>
 
-                    <div class="form-section">
+                    <!-- Sección común - Datos Básicos del Vehículo -->
+                    <div class="form-section vehicle-section common-fields">
                         <h3>Datos del Vehículo</h3>
                         <div class="form-row">
                             <div class="form-group">
@@ -171,6 +172,220 @@
                                     <option value="flota">Flota</option>
                                 </select>
                                 <i class="fas fa-road"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campos específicos para seguro de Terceros -->
+                    <div class="form-section vehicle-section specific-fields terceros-fields">
+                        <h3>Información Adicional - Seguro a Terceros</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="historialSiniestros">Historial de siniestros*</label>
+                                <select id="historialSiniestros" name="historialSiniestros" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="ninguno">Ninguno en los últimos 3 años</option>
+                                    <option value="uno">1 siniestro en los últimos 3 años</option>
+                                    <option value="dos">2 siniestros en los últimos 3 años</option>
+                                    <option value="mas">Más de 2 siniestros en los últimos 3 años</option>
+                                </select>
+                                <i class="fas fa-car-crash"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="limiteRc">Límite de responsabilidad civil*</label>
+                                <select id="limiteRc" name="limiteRc" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="basico">Básico (obligatorio)</option>
+                                    <option value="intermedio">Intermedio</option>
+                                    <option value="ampliado">Ampliado</option>
+                                </select>
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campos específicos para seguro Todo Riesgo -->
+                    <div class="form-section vehicle-section specific-fields todo-riesgo-fields">
+                        <h3>Información Adicional - Seguro Todo Riesgo</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="valorVehiculo">Valor estimado del vehículo (AR$)*</label>
+                                <input type="number" id="valorVehiculo" name="valorVehiculo" min="100000" required>
+                                <i class="fas fa-dollar-sign"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="accesorios">¿Incluir accesorios adicionales?*</label>
+                                <select id="accesorios" name="accesorios" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="no">No</option>
+                                    <option value="si">Sí</option>
+                                </select>
+                                <i class="fas fa-cogs"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row accesorios-adicionales">
+                            <div class="form-group">
+                                <label for="valorAccesorios">Valor de accesorios (AR$)</label>
+                                <input type="number" id="valorAccesorios" name="valorAccesorios" min="0">
+                                <i class="fas fa-plus-circle"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="detalleAccesorios">Detalle de accesorios</label>
+                                <input type="text" id="detalleAccesorios" name="detalleAccesorios" placeholder="Ej: Equipo de audio, llantas especiales, etc.">
+                                <i class="fas fa-list"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="coberturaCristales">Cobertura de cristales*</label>
+                                <select id="coberturaCristales" name="coberturaCristales" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="basica">Básica</option>
+                                    <option value="completa">Completa</option>
+                                </select>
+                                <i class="fas fa-glass"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="vehiculoReemplazo">¿Desea vehículo de reemplazo?*</label>
+                                <select id="vehiculoReemplazo" name="vehiculoReemplazo" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="no">No</option>
+                                    <option value="7dias">Sí, hasta 7 días</option>
+                                    <option value="15dias">Sí, hasta 15 días</option>
+                                </select>
+                                <i class="fas fa-exchange-alt"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campos específicos para seguro de Motos y Flotas -->
+                    <div class="form-section vehicle-section specific-fields motos-flotas-fields">
+                        <h3>Información Adicional - Motos y Flotas</h3>
+                        <div class="form-row" id="motoFields">
+                            <div class="form-group">
+                                <label for="cilindrada">Cilindrada (cc)*</label>
+                                <select id="cilindrada" name="cilindrada">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="hasta125">Hasta 125cc</option>
+                                    <option value="126a250">126cc a 250cc</option>
+                                    <option value="251a500">251cc a 500cc</option>
+                                    <option value="501omas">Más de 500cc</option>
+                                </select>
+                                <i class="fas fa-tachometer-alt"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoMoto">Tipo de moto*</label>
+                                <select id="tipoMoto" name="tipoMoto">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="urbana">Urbana/Calle</option>
+                                    <option value="scooter">Scooter</option>
+                                    <option value="deportiva">Deportiva</option>
+                                    <option value="enduro">Enduro/Cross</option>
+                                    <option value="custom">Custom/Chopper</option>
+                                </select>
+                                <i class="fas fa-motorcycle"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row" id="flotaFields">
+                            <div class="form-group">
+                                <label for="cantidadVehiculos">Cantidad de vehículos*</label>
+                                <input type="number" id="cantidadVehiculos" name="cantidadVehiculos" min="2">
+                                <i class="fas fa-cars"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoFlota">Tipo de flota*</label>
+                                <select id="tipoFlota" name="tipoFlota">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="comercial">Comercial</option>
+                                    <option value="distribucion">Distribución</option>
+                                    <option value="servicios">Servicios</option>
+                                    <option value="pasajeros">Transporte de pasajeros</option>
+                                </select>
+                                <i class="fas fa-truck"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="homogenea">¿Flota homogénea?*</label>
+                                <select id="homogenea" name="homogenea">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="si">Sí, misma marca y modelo</option>
+                                    <option value="similar">Similar, misma categoría</option>
+                                    <option value="no">No, vehículos variados</option>
+                                </select>
+                                <i class="fas fa-clone"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gestionFlota">¿Necesita sistema de gestión de flota?*</label>
+                                <select id="gestionFlota" name="gestionFlota">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="no">No</option>
+                                    <option value="basico">Sí, monitoreo básico</option>
+                                    <option value="avanzado">Sí, sistema avanzado</option>
+                                </select>
+                                <i class="fas fa-chart-line"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campos específicos para seguro con Franquicia -->
+                    <div class="form-section vehicle-section specific-fields franquicia-fields">
+                        <h3>Información Adicional - Seguro con Franquicia</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="valorVehiculoF">Valor estimado del vehículo (AR$)*</label>
+                                <input type="number" id="valorVehiculoF" name="valorVehiculoF" min="100000" required>
+                                <i class="fas fa-dollar-sign"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="franquiciaPreferida">Monto de franquicia preferido*</label>
+                                <select id="franquiciaPreferida" name="franquiciaPreferida" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="1porciento">1% del valor del vehículo</option>
+                                    <option value="2porciento">2% del valor del vehículo</option>
+                                    <option value="3porciento">3% del valor del vehículo</option>
+                                    <option value="5porciento">5% del valor del vehículo</option>
+                                    <option value="monto-fijo">Monto fijo</option>
+                                </select>
+                                <i class="fas fa-percentage"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row monto-fijo-franquicia">
+                            <div class="form-group">
+                                <label for="montoFijoFranquicia">Monto fijo de franquicia (AR$)*</label>
+                                <input type="number" id="montoFijoFranquicia" name="montoFijoFranquicia" min="10000">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="infoAdicionalFranquicia">¿Quiere recibir información sobre reducción de franquicia?*</label>
+                                <select id="infoAdicionalFranquicia" name="infoAdicionalFranquicia" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                </select>
+                                <i class="fas fa-info-circle"></i>
                                 <div class="validation-icon"></div>
                             </div>
                         </div>

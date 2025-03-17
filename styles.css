@@ -1061,7 +1061,7 @@ nav {
 
 /* ====== PLANES DE SEGURO ====== */
 .insurance-plan {
-    padding: 4rem 0;
+    padding: 2rem 0;
 }
 
 .plan-content {
@@ -1135,7 +1135,7 @@ nav {
 
 /* ====== FORMULARIO DE COTIZACIÓN ====== */
 .insurance-selector {
-    padding: 3rem 0;
+    padding: 1rem 0;
 }
 
 .insurance-options {
@@ -1187,7 +1187,7 @@ nav {
 }
 
 .quote-form {
-    padding: 4rem 0;
+    padding: 1rem 0;
 }
 
 .form-container {
@@ -2052,5 +2052,194 @@ footer {
         width: 100%;
         max-width: none;
         top: 68px;
+    }
+}
+
+/* Estilos para los campos específicos del formulario de cotización */
+.specific-fields {
+    display: none; /* Ocultar por defecto */
+    background-color: rgba(43, 125, 117, 0.05);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--azul-petroleo);
+    transition: all 0.3s ease;
+}
+
+.specific-fields.active {
+    display: block;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.accesorios-adicionales, 
+.monto-fijo-franquicia {
+    display: none;
+}
+
+.accesorios-adicionales.active, 
+.monto-fijo-franquicia.active {
+    display: grid;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Campo seleccionado en las opciones de seguros */
+.insurance-option.selected {
+    border: 2px solid var(--azul-petroleo);
+    background-color: rgba(43, 125, 117, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.insurance-option.selected .option-icon {
+    transform: scale(1.1);
+    background-color: var(--azul-oscuro);
+}
+
+/* Mejoras para dispositivos móviles */
+@media (max-width: 768px) {
+    /* Mejorar la navegación */
+    .menu {
+        z-index: 1001; /* Asegurar que el menú esté por encima de otros elementos */
+    }
+    
+    .submenu {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    /* Mejorar opciones de seguros en móvil */
+    .insurance-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .insurance-option {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        padding: 1rem;
+    }
+    
+    .option-icon {
+        margin: 0 1rem 0 0;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .option-icon i {
+        font-size: 24px;
+    }
+    
+    .insurance-option h3 {
+        font-size: 18px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .insurance-option p {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    
+    /* Mejorar formulario en móvil */
+    .form-container {
+        padding: 1.5rem;
+    }
+    
+    .form-section h3 {
+        font-size: 20px;
+    }
+    
+    .quote-sidebar {
+        margin-top: 2rem;
+    }
+    
+    /* Mejorar opciones de cobertura */
+    .coverage-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .coverage-option {
+        display: flex;
+        align-items: center;
+    }
+    
+    .coverage-option input {
+        position: static;
+        margin-right: 10px;
+    }
+    
+    .coverage-option label {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+}
+
+/* Mejoras para dispositivos muy pequeños */
+@media (max-width: 480px) {
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .form-group {
+        position: relative;
+    }
+    
+    .form-group i {
+        top: 43px; /* Ajustar posición del ícono */
+    }
+    
+    input, select, textarea {
+        font-size: 16px; /* Evitar zoom en dispositivos móviles al hacer focus */
+    }
+    
+    .quote-sidebar {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animación para mostrar elementos */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mejorar la visualización de botones flotantes en móvil */
+@media (max-width: 576px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* Corregir posibles problemas con el menú móvil */
+@media (max-width: 768px) {
+    .menu-toggle {
+        z-index: 1002;
+    }
+    
+    .menu.active {
+        display: flex;
+    }
+    
+    .dropdown > a .fa-chevron-down {
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown.active > a .fa-chevron-down {
+        transform: rotate(180deg);
     }
 }

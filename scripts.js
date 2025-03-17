@@ -320,6 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 const parent = this.parentNode;
+                parent.classList.toggle('active'); // Añadido para rotar el icono
                 const submenu = parent.querySelector('.submenu');
                 if (submenu) {
                     // Alternar visibilidad del submenu
@@ -363,74 +364,281 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('scroll', animateOnScroll);
     }
     
+    // =========== MEJORAS AL FORMULARIO DE COTIZACIÓN ===========
+    
     // Selección de tipo de seguro
     const insuranceOptions = document.querySelectorAll('.insurance-option');
     const quotationForm = document.getElementById('quotationForm');
     const coverageRadios = document.querySelectorAll('input[name="cobertura"]');
     
-    if (insuranceOptions.length > 0) {
-        // Crear el input oculto si no existe
-        let selectedInsuranceInput = document.getElementById('selectedInsurance');
-        if (!selectedInsuranceInput && quotationForm) {
-            selectedInsuranceInput = document.createElement('input');
-            selectedInsuranceInput.type = 'hidden';
-            selectedInsuranceInput.id = 'selectedInsurance';
-            selectedInsuranceInput.name = 'selectedInsurance';
-            quotationForm.appendChild(selectedInsuranceInput);
+    // Secciones específicas de formulario
+    const specificSections = {
+        'terceros': document.querySelector('.terceros-fields'),
+        'todo-riesgo': document.querySelector('.todo-riesgo-fields'),
+        'motos-flotas': document.querySelector('.motos-flotas-fields'),
+        'franquicia': document.querySelector('.franquicia-fields')
+    };
+    
+    // Campos condicionales adicionales
+    const accesoriosSelect = document.getElementById('accesorios');
+    const accesoriosAdicionales = document.querySelector('.accesorios-adicionales');
+    
+    const franquiciaSelect = document.getElementById('franquiciaPreferida');
+    const montoFijoFranquicia = document.querySelector('.monto-fijo-franquicia');
+    
+    const tipoVehiculoSelect = document.getElementById('tipoVehiculo');
+    const motoFields = document.getElementById('motoFields');
+    const flotaFields = document.getElementById('flotaFields');
+    
+    // Función para mostrar los campos específicos del tipo de seguro seleccionado
+    const mostrarCamposEspecificos = function(tipoSeguro) {
+        // Ocultar todas las secciones específicas
+        Object.values(specificSections).forEach(section => {
+            if (section) section.classList.remove('active');
+        });
+        
+        // Mostrar la sección específica correspondiente
+        if (specificSections[tipoSeguro]) {
+            specificSections[tipoSeguro].classList.add('active');
+            
+            // Activar campos requeridos para la sección activa
+            activarCamposRequeridos(tipoSeguro);
         }
         
+        // Mostrar/ocultar campos condicionales para Motos y Flotas
+        if (tipoSeguro === 'motos-flotas' && tipoVehiculoSelect) {
+            manejarCamposMotoFlota(tipoVehiculoSelect.value);
+        }
+    };
+    
+    // Función para activar/desactivar atributos required según la sección activa
+    const activarCamposRequeridos = function(tipoSeguro) {
+        // Desactivar todos los campos requeridos específicos
+        document.querySelectorAll('.specific-fields [required]').forEach(field => {
+            field.removeAttribute('required');
+        });
+        
+        // Activar campos requeridos para la sección activa
+        if (specificSections[tipoSeguro]) {
+            specificSections[tipoSeguro].querySelectorAll('input, select').forEach(field => {
+                if (field.hasAttribute('data-required') || field.id.includes('valor') || 
+                    field.id === 'limiteRc' || field.id === 'historialSiniestros' || 
+                    field.id === 'franquiciaPreferida' || field.id === 'infoAdicionalFranquicia' ||
+                    field.id === 'coberturaCristales' || field.id === 'vehiculoReemplazo') {
+                    field.setAttribute('required', '');
+                }
+            });
+        }
+    };
+    
+    // Función para manejar campos específicos de motos o flotas
+    const manejarCamposMotoFlota = function(tipoVehiculo) {
+        if (!motoFields || !flotaFields) return;
+        
+        if (tipoVehiculo === 'moto') {
+            motoFields.style.display = 'grid';
+            flotaFields.style.display = 'none';
+            
+            // Activar campos requeridos para motos
+            document.getElementById('cilindrada')?.setAttribute('required', '');
+            document.getElementById('tipoMoto')?.setAttribute('required', '');
+            document.getElementById('cantidadVehiculos')?.removeAttribute('required');
+            document.getElementById('tipoFlota')?.removeAttribute('required');
+            
+        } else if (tipoVehiculo === 'comercial' || (tipoVehiculo && document.getElementById('uso')?.value === 'flota')) {
+            motoFields.style.display = 'none';
+            flotaFields.style.display = 'grid';
+            
+            // Activar campos requeridos para flotas
+            document.getElementById('cilindrada')?.removeAttribute('required');
+            document.getElementById('tipoMoto')?.removeAttribute('required');
+            document.getElementById('cantidadVehiculos')?.setAttribute('required', '');
+            document.getElementById('tipoFlota')?.setAttribute('required', '');
+            
+        } else {
+            motoFields.style.display = 'none';
+            flotaFields.style.display = 'none';
+            
+            // Desactivar todos los campos específicos
+            document.getElementById('cilindrada')?.removeAttribute('required');
+            document.getElementById('tipoMoto')?.removeAttribute('required');
+            document.getElementById('cantidadVehiculos')?.removeAttribute('required');
+            document.getElementById('tipoFlota')?.removeAttribute('required');
+        }
+    };
+    
+    // Control de campos adicionales condicionales
+    if (accesoriosSelect) {
+        accesoriosSelect.addEventListener('change', function() {
+            if (this.value === 'si' && accesoriosAdicionales) {
+                accesoriosAdicionales.classList.add('active');
+                document.getElementById('valorAccesorios')?.setAttribute('required', '');
+                document.getElementById('detalleAccesorios')?.setAttribute('required', '');
+            } else {
+                accesoriosAdicionales.classList.remove('active');
+                document.getElementById('valorAccesorios')?.removeAttribute('required');
+                document.getElementById('detalleAccesorios')?.removeAttribute('required');
+            }
+        });
+    }
+    
+    if (franquiciaSelect) {
+        franquiciaSelect.addEventListener('change', function() {
+            if (this.value === 'monto-fijo' && montoFijoFranquicia) {
+                montoFijoFranquicia.classList.add('active');
+                document.getElementById('montoFijoFranquicia')?.setAttribute('required', '');
+            } else {
+                montoFijoFranquicia.classList.remove('active');
+                document.getElementById('montoFijoFranquicia')?.removeAttribute('required');
+            }
+        });
+    }
+    
+    if (tipoVehiculoSelect) {
+        tipoVehiculoSelect.addEventListener('change', function() {
+            // Solo aplicar si estamos en la sección de Motos y Flotas
+            if (specificSections['motos-flotas']?.classList.contains('active')) {
+                manejarCamposMotoFlota(this.value);
+            }
+        });
+    }
+    
+    // Función para seleccionar un tipo de seguro y sincronizar los elementos
+    const selectInsurance = function(tipoSeguro) {
+        // Actualizar opciones visuales 
+        insuranceOptions.forEach(option => {
+            if (option.dataset.insurance === tipoSeguro) {
+                option.classList.add('selected');
+            } else {
+                option.classList.remove('selected');
+            }
+        });
+        
+        // Sincronizar con opciones de radio
+        coverageRadios.forEach(radio => {
+            if (radio.value === tipoSeguro) {
+                radio.checked = true;
+            } else {
+                radio.checked = false;
+            }
+        });
+        
+        // Mostrar campos específicos
+        mostrarCamposEspecificos(tipoSeguro);
+        
+        // Mostrar el formulario
+        if (quotationForm) {
+            quotationForm.style.display = 'block';
+            
+            // Scroll suave hacia el formulario
+            setTimeout(() => {
+                document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+    };
+    
+    // Eventos para las opciones de seguro
+    if (insuranceOptions.length > 0) {
         // Verificar si viene un tipo de seguro en la URL
         const urlParams = new URLSearchParams(window.location.search);
         const planParam = urlParams.get('plan');
         
-        // Función para seleccionar un tipo de seguro
-        const selectInsurance = (option) => {
-            // Quitar selección de todas las opciones
-            insuranceOptions.forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // Seleccionar la opción actual
-            option.classList.add('selected');
-            
-            // Actualizar el valor del input oculto
-            if (selectedInsuranceInput) {
-                selectedInsuranceInput.value = option.dataset.insurance;
-            }
-            
-            // Actualizar radio button de cobertura si existe
-            const insuranceType = option.dataset.insurance;
-            coverageRadios.forEach(radio => {
-                if (radio.value === insuranceType) {
-                    radio.checked = true;
-                }
-            });
-            
-            // Mostrar el formulario
-            if (quotationForm) {
-                quotationForm.style.display = 'block';
-                
-                // Scroll suave hacia el formulario
-                setTimeout(() => {
-                    quotationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
-            }
-        };
-        
-        // Asignar evento click a las opciones
+        // Asignar evento click a las opciones visuales
         insuranceOptions.forEach(option => {
             option.addEventListener('click', function() {
-                selectInsurance(this);
+                selectInsurance(this.dataset.insurance);
+            });
+        });
+        
+        // Asignar evento change a los radio buttons
+        coverageRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    selectInsurance(this.value);
+                }
             });
         });
         
         // Si hay un tipo de seguro en la URL, seleccionarlo automáticamente
-        if (planParam) {
-            const planOption = Array.from(insuranceOptions).find(opt => opt.dataset.insurance === planParam);
-            if (planOption) {
-                selectInsurance(planOption);
-            }
+        if (planParam && Object.keys(specificSections).includes(planParam)) {
+            selectInsurance(planParam);
         }
+    }
+    
+    // Validación de formulario
+    if (quotationForm) {
+        // Validación en tiempo real
+        const validateField = function(field) {
+            const parent = field.parentElement;
+            
+            if (field.value.trim() === '') {
+                parent.classList.remove('valid-field');
+                if (field.hasAttribute('required')) {
+                    parent.classList.add('invalid-field');
+                    return false;
+                }
+            } else {
+                parent.classList.remove('invalid-field');
+                parent.classList.add('valid-field');
+                return true;
+            }
+            
+            return true;
+        };
+        
+        // Validar campos al cambiar
+        quotationForm.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            field.addEventListener('change', function() {
+                validateField(this);
+            });
+        });
+        
+        // Validación al enviar el formulario
+        quotationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let isValid = true;
+            const activeFields = document.querySelectorAll('.form-section:not([style*="display: none"]) [required], .specific-fields.active [required]');
+            
+            activeFields.forEach(field => {
+                if (!validateField(field)) {
+                    isValid = false;
+                    field.focus();
+                }
+            });
+            
+            if (isValid) {
+                // Simulación de envío exitoso
+                alert('¡Gracias por solicitar una cotización! Te contactaremos a la brevedad.');
+                // Opcionalmente, limpiar el formulario
+                this.reset();
+                
+                // Resetear clases de validación
+                this.querySelectorAll('.valid-field, .invalid-field').forEach(el => {
+                    el.classList.remove('valid-field', 'invalid-field');
+                });
+                
+                // Ocultar todas las secciones específicas
+                Object.values(specificSections).forEach(section => {
+                    if (section) section.classList.remove('active');
+                });
+                
+                // Ocultar campos condicionales
+                if (accesoriosAdicionales) accesoriosAdicionales.classList.remove('active');
+                if (montoFijoFranquicia) montoFijoFranquicia.classList.remove('active');
+                
+                // Quitar selección de opciones de seguro
+                insuranceOptions.forEach(option => {
+                    option.classList.remove('selected');
+                });
+            } else {
+                alert('Por favor, completa todos los campos requeridos correctamente.');
+            }
+        });
     }
     
     // Formulario de contacto
@@ -458,35 +666,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('¡Gracias por tu mensaje! Te responderemos a la brevedad.');
                 // Opcionalmente, limpiar el formulario
                 contactForm.reset();
-            } else {
-                alert('Por favor, completa todos los campos requeridos.');
-            }
-        });
-    }
-    
-    // Formulario de cotización
-    if (quotationForm) {
-        quotationForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Validación básica
-            let isValid = true;
-            const requiredFields = quotationForm.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('invalid');
-                } else {
-                    field.classList.remove('invalid');
-                }
-            });
-            
-            if (isValid) {
-                // Simulación de envío exitoso
-                alert('¡Gracias por solicitar una cotización! Te contactaremos a la brevedad.');
-                // Opcionalmente, limpiar el formulario
-                quotationForm.reset();
             } else {
                 alert('Por favor, completa todos los campos requeridos.');
             }
