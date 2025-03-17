@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         interval: null,
         
         init: function() {
+            // Solo inicializa si hay slides
             if (this.slides.length === 0) return;
             
             // Configurar botones de navegación
@@ -26,11 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Configurar puntos indicadores
-            this.dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    this.showSlide(index);
+            if (this.dots.length > 0) {
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        this.showSlide(index);
+                    });
                 });
-            });
+            }
             
             // Iniciar slider automático
             this.startAutoplay();
@@ -57,15 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Quitar clase active de todos los dots
-            this.dots.forEach(dot => {
-                dot.classList.remove('active');
-            });
+            if (this.dots.length > 0) {
+                this.dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+            }
             
             // Mostrar la slide actual
             this.slides[index].classList.add('active');
             
             // Actualizar dot activo
-            if (this.dots[index]) {
+            if (this.dots.length > 0 && this.dots[index]) {
                 this.dots[index].classList.add('active');
             }
             
@@ -97,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         interval: null,
         
         init: function() {
+            // Solo inicializa si hay items
             if (this.items.length === 0) return;
             
             // Configurar botones de navegación
@@ -113,11 +119,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Configurar puntos indicadores
-            this.dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    this.showSlide(index);
+            if (this.dots.length > 0) {
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        this.showSlide(index);
+                    });
                 });
-            });
+            }
             
             // Iniciar slider automático
             this.startAutoplay();
@@ -144,15 +152,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Quitar clase active de todos los dots
-            this.dots.forEach(dot => {
-                dot.classList.remove('active');
-            });
+            if (this.dots.length > 0) {
+                this.dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+            }
             
             // Mostrar el item actual
             this.items[index].classList.add('active');
             
             // Actualizar dot activo
-            if (this.dots[index]) {
+            if (this.dots.length > 0 && this.dots[index]) {
                 this.dots[index].classList.add('active');
             }
             
@@ -174,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Partners Carousel (NUEVO)
+    // Partners Carousel
     const partnersCarousel = {
         slides: document.querySelectorAll('.partner-logo-slide'),
         indicators: document.querySelectorAll('.carousel-indicators .indicator'),
@@ -184,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         interval: null,
         
         init: function() {
+            // Solo inicializa si hay slides
             if (this.slides.length === 0) return;
             
             // Configurar inicialmente todos los slides excepto el primero
@@ -207,11 +218,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Configurar indicadores
-            this.indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => {
-                    this.showSlide(index);
+            if (this.indicators.length > 0) {
+                this.indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => {
+                        this.showSlide(index);
+                    });
                 });
-            });
+            }
             
             // Iniciar carousel automático
             this.startAutoplay();
@@ -238,15 +251,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Quitar clase active de todos los indicadores
-            this.indicators.forEach(indicator => {
-                indicator.classList.remove('active');
-            });
+            if (this.indicators.length > 0) {
+                this.indicators.forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+            }
             
             // Mostrar el slide actual
             this.slides[index].style.display = 'flex';
             
             // Actualizar indicador activo
-            if (this.indicators[index]) {
+            if (this.indicators.length > 0 && this.indicators[index]) {
                 this.indicators[index].classList.add('active');
             }
             
@@ -271,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar los sliders
     heroSlider.init();
     testimonialSlider.init();
-    partnersCarousel.init(); // Inicializar el nuevo carousel para aseguradoras
+    partnersCarousel.init();
     
     // Menu de navegación responsive
     const menuToggle = document.querySelector('.menu-toggle');
@@ -299,21 +314,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Manejo de menú desplegable en móvil
     const dropdownLinks = document.querySelectorAll('.dropdown > a');
     
-    if (window.innerWidth <= 768) {
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Solo prevenir comportamiento por defecto en móvil
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const parent = this.parentNode;
-                    const submenu = parent.querySelector('.submenu');
-                    if (submenu) {
-                        submenu.style.height = submenu.style.height === 'auto' ? '0' : 'auto';
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Solo prevenir comportamiento por defecto en móvil
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const parent = this.parentNode;
+                const submenu = parent.querySelector('.submenu');
+                if (submenu) {
+                    // Alternar visibilidad del submenu
+                    if (submenu.style.height === 'auto' || submenu.style.height === '') {
+                        submenu.style.height = '0';
+                    } else {
+                        submenu.style.height = 'auto';
                     }
                 }
-            });
+            }
         });
-    }
+    });
     
     // Animación de elementos al hacer scroll
     const animateOnScroll = function() {
@@ -333,23 +351,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicialmente, establecer los elementos como invisibles
     const elementsToAnimate = document.querySelectorAll('.benefit-card, .partner-logo, .testimonial-card, .plan-content, .form-section');
     
-    elementsToAnimate.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    });
-    
-    // Activar la animación inicial y en scroll
-    animateOnScroll();
-    window.addEventListener('scroll', animateOnScroll);
+    if (elementsToAnimate.length > 0) {
+        elementsToAnimate.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        // Activar la animación inicial y en scroll
+        animateOnScroll();
+        window.addEventListener('scroll', animateOnScroll);
+    }
     
     // Selección de tipo de seguro
     const insuranceOptions = document.querySelectorAll('.insurance-option');
-    const selectedInsuranceInput = document.getElementById('selectedInsurance');
     const quotationForm = document.getElementById('quotationForm');
-    const formSections = document.querySelectorAll('.form-section');
+    const coverageRadios = document.querySelectorAll('input[name="cobertura"]');
     
     if (insuranceOptions.length > 0) {
+        // Crear el input oculto si no existe
+        let selectedInsuranceInput = document.getElementById('selectedInsurance');
+        if (!selectedInsuranceInput && quotationForm) {
+            selectedInsuranceInput = document.createElement('input');
+            selectedInsuranceInput.type = 'hidden';
+            selectedInsuranceInput.id = 'selectedInsurance';
+            selectedInsuranceInput.name = 'selectedInsurance';
+            quotationForm.appendChild(selectedInsuranceInput);
+        }
+        
         // Verificar si viene un tipo de seguro en la URL
         const urlParams = new URLSearchParams(window.location.search);
         const planParam = urlParams.get('plan');
@@ -369,6 +398,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedInsuranceInput.value = option.dataset.insurance;
             }
             
+            // Actualizar radio button de cobertura si existe
+            const insuranceType = option.dataset.insurance;
+            coverageRadios.forEach(radio => {
+                if (radio.value === insuranceType) {
+                    radio.checked = true;
+                }
+            });
+            
             // Mostrar el formulario
             if (quotationForm) {
                 quotationForm.style.display = 'block';
@@ -377,28 +414,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     quotationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 300);
-            }
-            
-            // Mostrar/ocultar campos según el tipo de seguro
-            if (formSections) {
-                const insuranceType = option.dataset.insurance;
-                
-                // Mostrar todos los campos comunes
-                formSections.forEach(section => {
-                    section.style.display = 'block';
-                });
-                
-                // Mostrar/ocultar campos específicos
-                const motosFlotasSection = document.getElementById('motosFlotasSection');
-                const todoRiesgoSection = document.getElementById('todoRiesgoSection');
-                
-                if (motosFlotasSection) {
-                    motosFlotasSection.style.display = insuranceType === 'motos-flotas' ? 'block' : 'none';
-                }
-                
-                if (todoRiesgoSection) {
-                    todoRiesgoSection.style.display = insuranceType === 'todo-riesgo' ? 'block' : 'none';
-                }
             }
         };
         
@@ -411,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Si hay un tipo de seguro en la URL, seleccionarlo automáticamente
         if (planParam) {
-            const planOption = [...insuranceOptions].find(opt => opt.dataset.insurance === planParam);
+            const planOption = Array.from(insuranceOptions).find(opt => opt.dataset.insurance === planParam);
             if (planOption) {
                 selectInsurance(planOption);
             }
@@ -425,42 +440,69 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Aquí iría la validación y el envío del formulario
-            // Por ahora, simulamos una respuesta exitosa
+            // Validación básica
+            let isValid = true;
+            const requiredFields = contactForm.querySelectorAll('[required]');
             
-            alert('¡Gracias por tu mensaje! Te responderemos a la brevedad.');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else {
+                    field.classList.remove('invalid');
+                }
+            });
             
-            // Opcionalmente, limpiar el formulario
-            // contactForm.reset();
+            if (isValid) {
+                // Simulación de envío exitoso
+                alert('¡Gracias por tu mensaje! Te responderemos a la brevedad.');
+                // Opcionalmente, limpiar el formulario
+                contactForm.reset();
+            } else {
+                alert('Por favor, completa todos los campos requeridos.');
+            }
         });
     }
     
     // Formulario de cotización
-    const quotationForm = document.getElementById('quotationForm');
-    
     if (quotationForm) {
         quotationForm.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Aquí iría la validación y el envío del formulario
-            // Por ahora, simulamos una respuesta exitosa
+            // Validación básica
+            let isValid = true;
+            const requiredFields = quotationForm.querySelectorAll('[required]');
             
-            alert('¡Gracias por solicitar una cotización! Te contactaremos a la brevedad.');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else {
+                    field.classList.remove('invalid');
+                }
+            });
             
-            // Opcionalmente, limpiar el formulario
-            // quotationForm.reset();
+            if (isValid) {
+                // Simulación de envío exitoso
+                alert('¡Gracias por solicitar una cotización! Te contactaremos a la brevedad.');
+                // Opcionalmente, limpiar el formulario
+                quotationForm.reset();
+            } else {
+                alert('Por favor, completa todos los campos requeridos.');
+            }
         });
     }
     
     // Animación suave al hacer click en los enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
             const targetId = this.getAttribute('href').substring(1);
+            if (!targetId) return; // Si es solo "#", no hacer nada
+            
             const targetElement = document.getElementById(targetId);
             
             if (targetElement) {
+                e.preventDefault();
                 window.scrollTo({
                     top: targetElement.offsetTop - 80, // Ajuste para el header fijo
                     behavior: 'smooth'
@@ -496,7 +538,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
-    // Añadir clase CSS para la animación
+    // Inicialización del mapa de Google en la página de contacto
+    if (document.getElementById('googleMap')) {
+        // Verificar si ya existe la función initMap global
+        if (typeof window.initMap !== 'function') {
+            window.initMap = function() {
+                try {
+                    // Coordenadas de la ubicación (Av. de los Incas 4828)
+                    var location = {lat: -34.573975, lng: -58.478653};
+                    
+                    // Crear mapa
+                    var map = new google.maps.Map(
+                        document.getElementById('googleMap'), {
+                        zoom: 15,
+                        center: location
+                    });
+                    
+                    // Agregar marcador
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: 'WV Protección Total'
+                    });
+                } catch (error) {
+                    console.error('Error al inicializar el mapa:', error);
+                    
+                    // Solución alternativa: mostrar un mensaje o una imagen estática
+                    const mapContainer = document.getElementById('googleMap');
+                    if (mapContainer) {
+                        mapContainer.innerHTML = '<div style="text-align:center;padding:50px;"><p>El mapa no está disponible en este momento.</p><p>Nos encontramos en: Av. de los Incas 4828, C1427DON CABA</p></div>';
+                    }
+                }
+            };
+        }
+    }
+    
+    // Añadir clase CSS para la animación del botón de WhatsApp
     const style = document.createElement('style');
     style.textContent = `
         @keyframes pulse {
@@ -510,23 +587,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-    
-    // Precargar imágenes para mejorar rendimiento
-    const preloadImages = function() {
-        const imagesToPreload = [
-            'img/hero-bg.jpg',
-            'img/banner-bg.jpg',
-            'img/terceros.jpg',
-            'img/todo-riesgo.jpg',
-            'img/motos-flotas.jpg',
-            'img/franquicia.jpg'
-        ];
-        
-        imagesToPreload.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
-    };
-    
-    preloadImages();
 });
