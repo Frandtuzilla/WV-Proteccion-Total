@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización - WV Protección Total</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header y Menú de Navegación -->
+    <header>
+        <div class="logo">
+            <h1>WV Protección Total</h1>
+        </div>
+        <nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="servicios.html">Servicios <i class="fas fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="servicios.html#terceros">Terceros</a></li>
+                        <li><a href="servicios.html#todo-riesgo">Todo Riesgo</a></li>
+                        <li><a href="servicios.html#motos-flotas">Motos y Flotas</a></li>
+                        <li><a href="servicios.html#franquicia">Franquicia</a></li>
+                    </ul>
+                </li>
+                <li><a href="cotizacion.html" class="active">Cotización</a></li>
+                <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner de Cotización -->
+    <section class="page-banner">
+        <div class="page-banner-content">
+            <h1>COTIZA TU SEGURO</h1>
+            <p>Completa el formulario y obtén una cotización personalizada</p>
+        </div>
+    </section>
+
+    <!-- Selección de Tipo de Seguro -->
+    <section class="insurance-selector">
+        <div class="container">
+            <h2>ELIGE EL TIPO DE SEGURO</h2>
+            <p class="text-center">Selecciona el tipo de cobertura que mejor se adapte a tus necesidades</p>
+            
+            <div class="insurance-options">
+                <div class="insurance-option" data-insurance="terceros">
+                    <div class="option-icon">
+                        <i class="fas fa-car-crash"></i>
+                    </div>
+                    <h3>Seguro a Terceros</h3>
+                    <p>La opción más económica que cubre los daños que puedas ocasionar a terceros.</p>
+                </div>
+                
+                <div class="insurance-option" data-insurance="todo-riesgo">
+                    <div class="option-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Todo Riesgo</h3>
+                    <p>Protección total para tu vehículo ante cualquier incidente.</p>
+                </div>
+                
+                <div class="insurance-option" data-insurance="motos-flotas">
+                    <div class="option-icon">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <h3>Motos y Flotas</h3>
+                    <p>Soluciones especializadas para motocicletas y flotas de vehículos.</p>
+                </div>
+                
+                <div class="insurance-option" data-insurance="franquicia">
+                    <div class="option-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Con Franquicia</h3>
+                    <p>Equilibrio perfecto entre protección y costo mensual reducido.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Cotización -->
+    <section class="quote-form">
+        <div class="container">
+            <div class="form-container">
+                <form id="quotationForm">
+                    <div class="form-section">
+                        <h3>Datos Personales</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombre">Nombre completo*</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                                <i class="fas fa-user"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email*</label>
+                                <input type="email" id="email" name="email" required>
+                                <i class="fas fa-envelope"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono">Teléfono*</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                                <i class="fas fa-phone-alt"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="localidad">Localidad*</label>
+                                <input type="text" id="localidad" name="localidad" required>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Datos del Vehículo</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tipoVehiculo">Tipo de vehículo*</label>
+                                <select id="tipoVehiculo" name="tipoVehiculo" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="auto">Auto</option>
+                                    <option value="camioneta">Camioneta</option>
+                                    <option value="moto">Moto</option>
+                                    <option value="comercial">Vehículo Comercial</option>
+                                </select>
+                                <i class="fas fa-car"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="marca">Marca*</label>
+                                <input type="text" id="marca" name="marca" required>
+                                <i class="fas fa-tag"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="modelo">Modelo*</label>
+                                <input type="text" id="modelo" name="modelo" required>
+                                <i class="fas fa-car-side"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="anio">Año*</label>
+                                <input type="number" id="anio" name="anio" min="1950" max="2025" required>
+                                <i class="fas fa-calendar-alt"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="uso">Uso del vehículo*</label>
+                                <select id="uso" name="uso" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="particular">Particular</option>
+                                    <option value="comercial">Comercial</option>
+                                    <option value="flota">Flota</option>
+                                </select>
+                                <i class="fas fa-road"></i>
+                                <div class="validation-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Tipo de Cobertura</h3>
+                        <div class="form-row coverage-options">
+                            <div class="coverage-option">
+                                <input type="radio" id="terceros" name="cobertura" value="terceros" required>
+                                <label for="terceros">
+                                    <span class="option-title">Terceros</span>
+                                    <span class="option-description">La opción más económica y confiable.</span>
+                                </label>
+                            </div>
+                            <div class="coverage-option">
+                                <input type="radio" id="todoRiesgo" name="cobertura" value="todo-riesgo">
+                                <label for="todoRiesgo">
+                                    <span class="option-title">Todo Riesgo</span>
+                                    <span class="option-description">Protección total ante cualquier incidente.</span>
+                                </label>
+                            </div>
+                            <div class="coverage-option">
+                                <input type="radio" id="motosFlotas" name="cobertura" value="motos-flotas">
+                                <label for="motosFlotas">
+                                    <span class="option-title">Motos y Flotas</span>
+                                    <span class="option-description">Cobertura especializada para negocios y motociclistas.</span>
+                                </label>
+                            </div>
+                            <div class="coverage-option">
+                                <input type="radio" id="franquicia" name="cobertura" value="franquicia">
+                                <label for="franquicia">
+                                    <span class="option-title">Con Franquicia</span>
+                                    <span class="option-description">Una opción flexible y accesible.</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Comentarios Adicionales</h3>
+                        <div class="form-group">
+                            <textarea id="comentarios" name="comentarios" rows="4" placeholder="¿Hay algo más que deberíamos saber?"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Solicitar Cotización</button>
+                        <button type="reset" class="btn-secondary">Limpiar Formulario</button>
+                    </div>
+                </form>
+            </div>
+            <div class="quote-sidebar">
+                <div class="info-card">
+                    <h3>¿Por qué elegirnos?</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Atención personalizada</li>
+                        <li><i class="fas fa-check-circle"></i> Mejores precios del mercado</li>
+                        <li><i class="fas fa-check-circle"></i> Respuesta inmediata</li>
+                        <li><i class="fas fa-check-circle"></i> Trabajamos con las principales aseguradoras</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>¿Tienes dudas?</h3>
+                    <p>No dudes en contactarnos directamente si prefieres hablar con uno de nuestros asesores.</p>
+                    <a href="contacto.html" class="btn-secondary">Contactar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>WV Protección Total</h3>
+                    <p>Tu tranquilidad es nuestra prioridad. Ofrecemos seguros a medida con la mejor cobertura y atención personalizada.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="cotizacion.html">Cotización</a></li>
+                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <p>Av. de los Incas 4828, C1427DON Cdad. Autónoma de Buenos Aires</p>
+                    <p>Lunes a Viernes: 9:00 - 18:00 hs</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 WV Protección Total. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/5491162470505" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
